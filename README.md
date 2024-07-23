@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./figures/Logo.svg" width="100%">
+  <img src="./figures/Logo.svg" width="80%">
 </div>
 
 # CrackMamba
