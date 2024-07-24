@@ -8,4 +8,28 @@ This repository is the official PyTorch implementation of Mamba meets crack segm
 ### 🍓 Paper:
 - The initial version of the paper can refer to the [arXiv version](https://arxiv.org/abs/2407.15714) or [ResearchGate](https://www.researchgate.net/publication/382459254_Mamba_meets_crack_segmentation).  
 
+## 📢 Introduction
+This repository mainly includes 2 parts:  
+- [ ] Code of **CrackMamba**
+- [ ] A simple tutorial about how to install Mamba
+
+## 📌 Updates
+- **`2024/07/23`**: The preprint of our paper is publicly available on arXiv. Link → [Arxiv Paper](https://arxiv.org/abs/2407.15714).
+- **`2024/07/22`**: The preprint of our paper is submitted to arXiv.
+- **`2024/06/30`**: This repository is built up! The code will be gradually released.
+
+## 🏎️ Getting Started
+
+### 1. Requirements
+Our version requirements are **lower than** those of other Mamba-based research, which is **more friendly** to those who installed old versions.
+~~~
+Recommended versions are
+    * Mamba = 1.1.1 or 1.2.0
+    * causal-conv1d = 1.1.1
+    * python = 3.8.15
+    * pytorch = 1.12.1
+    * CUDA 11.6.2 and CUDNN 8.6.0  
+~~~
+
+### 2. Installation
 
