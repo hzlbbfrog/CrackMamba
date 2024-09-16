@@ -31,5 +31,14 @@ Recommended versions are
     * CUDA 11.6.2 and CUDNN 8.6.0  
 ~~~
 
-### 2. Installation
-
+### 2. Installation of Mamba
+**Step 1:** Install causal_conv
+~~~
+pip install causal_conv1d==1.1.1
+~~~
+**Step 2:** Install Mamba 1.2.0
+~~~
+cd mamba-1.2.0
+python setup.py install
+~~~
+Remark: We have provided the folder in this repo for your convenience.
