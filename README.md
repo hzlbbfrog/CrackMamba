@@ -41,4 +41,12 @@ pip install causal_conv1d==1.1.1
 cd mamba-1.2.0
 python setup.py install
 ~~~
-Remark: We have provided the [folder of Mamba-1.2.0](https://github.com/hzlbbfrog/CrackMamba/tree/main/mamba-1.2.0) in this repo for your convenience.
+Remark: We have provided the needed [Mamba-1.2.0](https://github.com/hzlbbfrog/CrackMamba/tree/main/mamba-1.2.0) in this repo for your convenience.
+
+**Step 3:** Install Mamba 1.2.0
+
+## 💗 Cite CrackMamba
+
+## 💘 Acknowledgements
+
+
