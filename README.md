@@ -30,6 +30,7 @@ Recommended versions are
     * pytorch = 1.12.1
     * CUDA 11.6.2 and CUDNN 8.6.0  
 ~~~
+I want to let you know that the following installation **works in Linux (specifically, I used Ubuntu 18.04)**. It **does not work** when I try to reproduce it in Win 11. 😤
 
 ### 2. Installation of Mamba
 **Step 1:** Install causal_conv
