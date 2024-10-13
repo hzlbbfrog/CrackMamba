@@ -33,16 +33,26 @@ Recommended versions are
 I want to let you know that the following installation **works in Linux (specifically, I used Ubuntu 18.04)**. It **does not work** when I try to reproduce it in Win 11. 😤
 
 ### 2. Installation of Mamba
-**Step 1:** Install causal_conv
+
+**Step 1: Install causal_conv**
 ~~~
 pip install causal_conv1d==1.1.1
 ~~~
-**Step 2:** Install Mamba 1.2.0
+The screenshot of the successful installation is shown below.
+<div align="center">
+  <img src="./figures/causal_conv1d 1.1.1.png" width="100%">
+</div>
+
+**Step 2: Install Mamba**
 ~~~
 cd mamba-1.2.0
 python setup.py install
 ~~~
-Remark: We have provided the needed [Mamba-1.2.0](https://github.com/hzlbbfrog/CrackMamba/tree/main/mamba-1.2.0) in this repo for your convenience.
+Remark: We have provided the needed [Mamba-1.2.0](https://github.com/hzlbbfrog/CrackMamba/tree/main/mamba-1.2.0) in this repo for your convenience.  
+The screenshot of the successful installation is shown below.
+<div align="center">
+  <img src="./figures/Mamba 1.2.0.png" width="100%">
+</div>
 
 **Step 3:** Install Mamba 1.2.0
 
