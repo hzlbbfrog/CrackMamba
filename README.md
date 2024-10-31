@@ -34,7 +34,7 @@ I want to let you know that the following installation **works in Linux (specifi
 
 ### 2. Installation of Mamba
 
-**Step 1: Install causal_conv**
+**Step 1: Install causal_conv 1.1.1**
 ~~~
 pip install causal_conv1d==1.1.1
 ~~~
@@ -43,7 +43,7 @@ The screenshot of the successful installation is shown below.
   <img src="./figures/causal_conv1d 1.1.1.png" width="100%">
 </div>
 
-**Step 2: Install Mamba**
+**Step 2: Install Mamba 1.2.0**
 ~~~
 cd mamba-1.2.0
 python setup.py install
