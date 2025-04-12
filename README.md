@@ -12,6 +12,7 @@ This repository is the official PyTorch implementation of Mamba meets crack segm
 This repository mainly includes 2 parts:  
 - [ ] Code of **CrackMamba**
 - [ ] A simple tutorial about how to install Mamba
+- [ ] A tutorial about how to play deep learning on a Jetson device
 
 ## 📌 Updates
 - **`2024/07/23`**: The preprint of our paper is publicly available on arXiv. Link → [Arxiv Paper](https://arxiv.org/abs/2407.15714).
