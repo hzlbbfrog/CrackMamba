@@ -11,7 +11,7 @@ This repository is the official PyTorch implementation of Mamba meets crack segm
 ## 📢 Introduction
 This repository mainly includes 2 parts:  
 - [ ] Code of **CrackMamba**
-- [ ] A simple tutorial about how to install Mamba. → [here](https://github.com/hzlbbfrog/CrackMamba?tab=readme-ov-file#2-installation-of-mamba)
+- [ ] A simple tutorial about how to install Mamba on PC. → [here](https://github.com/hzlbbfrog/CrackMamba?tab=readme-ov-file#2-installation-of-mamba)
 - [ ] A simple tutorial about how to play deep learning on a Jetson device. → [here](https://github.com/hzlbbfrog/CrackMamba?tab=readme-ov-file#-build-a-deep-learning-environment-on-a-jetson-device)
 
 ## 📌 Updates
