@@ -58,7 +58,9 @@ The screenshot of the successful installation is shown below.
 **Step 3:** Install Mamba 1.2.0
 
 ## 🛫 Build a deep learning environment on a Jetson device
+### 1. Basic environment
 
+### 2. Fast inference based on TensorRT
 
 ## 💗 Cite CrackMamba
 
