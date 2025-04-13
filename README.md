@@ -60,8 +60,9 @@ The screenshot of the successful installation is shown below.
 ## 🛫 Build a deep learning environment on a Jetson device
 ### 1. Basic environment
 
-### 2. Fast inference based on TensorRT
-
+### 2. Fast inference based on TensorRT (V10)
+In version 10+ of TensorRT, you should use **context.execute_async_v3()** for inference. **context.execute_async_v2()** has been deprecated.
+  
 ## 💗 Cite CrackMamba
 
 ## 💘 Acknowledgements
