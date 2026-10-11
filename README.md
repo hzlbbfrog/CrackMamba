@@ -65,5 +65,6 @@ In version 10+ of TensorRT, you should use **context.execute_async_v3()** for in
 ## 💗 Cite CrackMamba
 
 ## 💘 Acknowledgements
-
+This repo benefits from Vim and VMamba.  
+Thanks for their wonderful works!
 
