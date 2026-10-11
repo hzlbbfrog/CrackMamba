@@ -3,10 +3,11 @@
 </div>
 
 # CrackMamba
-This repository is the official PyTorch implementation of Mamba meets crack segmentation.
+This repository is the official PyTorch implementation of **[CrackMamba](https://www.sciencedirect.com/science/article/pii/S0957417426019469)**.
 
 ### 🍓 Paper:
-- The initial version of the paper can refer to the [arXiv version](https://arxiv.org/abs/2407.15714) or [ResearchGate](https://www.researchgate.net/publication/382459254_Mamba_meets_crack_segmentation).  
+- The initial version of the paper can refer to the [arXiv version](https://arxiv.org/abs/2407.15714) or [ResearchGate](https://www.researchgate.net/publication/382459254_Mamba_meets_crack_segmentation).
+- The final journal version of our paper can refer to the [journal version](https://www.sciencedirect.com/science/article/pii/S0957417426019469).
 
 ## 📢 Introduction
 This repository mainly includes 2 parts:  
@@ -15,6 +16,8 @@ This repository mainly includes 2 parts:
 - [ ] A simple tutorial about how to play deep learning on a Jetson device. → [here](https://github.com/hzlbbfrog/CrackMamba?tab=readme-ov-file#-build-a-deep-learning-environment-on-a-jetson-device)
 
 ## 📌 Updates
+- **`2026/10/11`**: We release all the code.
+- **`2026/05/26`**: Our paper is finally accepted by Expert Systems with Applications **(IF 9.4, CCF-C)** after **2 years** later!
 - **`2024/07/23`**: The preprint of our paper is publicly available on arXiv. Link → [Arxiv Paper](https://arxiv.org/abs/2407.15714).
 - **`2024/07/22`**: The preprint of our paper is submitted to arXiv.
 - **`2024/06/30`**: This repository is built up! The code will be gradually released.
