@@ -67,7 +67,7 @@ CrackMamba/
 
 ## 📌 Updates
 
-- **`2026/10/11`**: We release all the code.
+- **`2026/10/12`**: We release all the code.
 - **`2026/05/26`**: Our paper is finally accepted by [Expert Systems with Applications](https://www.sciencedirect.com/science/article/abs/pii/S0957417426019469?via%3Dihub) **(IF 9.4, CCF-C)** after **2 years** later!
 - **`2024/07/23`**: The preprint of our paper is publicly available on arXiv. Link → [Arxiv Paper](https://arxiv.org/abs/2407.15714).
 - **`2024/07/22`**: The preprint of our paper is submitted to arXiv.
