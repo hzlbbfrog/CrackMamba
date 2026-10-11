@@ -11,13 +11,25 @@ Official PyTorch implementation of **CrackMamba: An attention-guided Mamba archi
 
 ### 🍓 Paper:
 
-[Journal paper](https://doi.org/10.1016/j.eswa.2026.133035) · [arXiv preprint](https://arxiv.org/abs/2407.15714) · [Steelcrack dataset](https://github.com/hzlbbfrog/Civil-dataset#-steelcrack) · [Citation](#-cite-crackmamba) · [License](LICENSE)
+[Journal paper](https://doi.org/10.1016/j.eswa.2026.133035) · [arXiv preprint](https://arxiv.org/abs/2407.15714) · [Steelcrack dataset](https://github.com/hzlbbfrog/Civil-dataset#-steelcrack)
+
+### 🧭 Contents
+
+- **Project:** [Introduction](#-introduction) · [Repository structure](#repository-structure) · [Updates](#-updates)
+- **Reproduction:** [Requirements](#1-requirements) · [Installation](#2-installation-of-mamba) · [Dataset](#3-prepare-the-dataset) · [Training](#4-training-and-validation) · [Evaluation](#5-test)
+- **Resources:** [Jetson tutorial](#-build-a-deep-learning-environment-on-a-jetson-device) · [Citation](#-cite-crackmamba) · [License and contact](#-license-and-contact)
 
 ## 📢 Introduction
 
 CrackMamba combines selective state-space modeling with attention-guided feature modulation for pixel-level crack segmentation. Global scan modules capture long-range crack structure, while local scan modules operate on regular and shifted patch grids. The segmentation network fuses features across resolutions and includes an auxiliary output for training.
 
 This release provides the CrackMamba network, its global and local modules, and the Steelcrack training and evaluation entry points. The instructions below follow our three-GPU training configuration.
+
+Benchmark results, ablation studies, and edge deployment experiments are reported in the [journal paper](https://doi.org/10.1016/j.eswa.2026.133035).
+
+<a name="repository-structure"></a>
+
+### 🗂️ Repository structure
 
 | Component | Implementation |
 | --- | --- |
@@ -28,7 +40,30 @@ This release provides the CrackMamba network, its global and local modules, and 
 | Distributed training and validation | [Training script](CrackSeU_main_pal_4_Steelcrack.py) |
 | Checkpoint evaluation and prediction export | [Evaluation script](CrackSeU_main_pal_test_4_Steelcrack.py) |
 
-Benchmark results, ablation studies, and edge deployment experiments are reported in the [journal paper](https://doi.org/10.1016/j.eswa.2026.133035).
+<details>
+<summary>View the full repository layout</summary>
+
+```text
+CrackMamba/
+├── Nets/
+│   ├── CrackSeU_B_LN_VT_CrackMamba.py
+│   └── Module/
+│       ├── CrackMamba_G.py
+│       └── CrackMamba_L.py
+├── utils/
+│   ├── loss.py
+│   └── metrics.py
+├── Dataset.py
+├── CrackSeU_main_pal_4_Steelcrack.py
+├── CrackSeU_main_pal_test_4_Steelcrack.py
+├── mamba-1.2.0/
+├── figures/
+├── requirements.txt
+├── LICENSE
+└── README.md
+```
+
+</details>
 
 ## 📌 Updates
 
@@ -59,6 +94,8 @@ Use Linux with NVIDIA GPUs for the training and evaluation commands below. The o
 
 ### 2. Installation of Mamba
 
+#### 2.1 Create the environment
+
 Clone the repository and create an environment:
 
 ```bash
@@ -67,6 +104,8 @@ cd CrackMamba
 conda create -n crackmamba python=3.8.15 -y
 conda activate crackmamba
 ```
+
+#### 2.2 Install PyTorch and dependencies
 
 Install CUDA-enabled PyTorch before building the Mamba extensions. For the reference CUDA 11.6 configuration:
 
@@ -79,7 +118,7 @@ python -m pip install -r requirements.txt
 
 The PyTorch command follows the [official previous-version installation guide](https://pytorch.org/get-started/previous-versions/#v1121). A CUDA toolkit with `nvcc` is needed when compiling extensions locally; installing a PyTorch CUDA wheel alone does not supply the compiler.
 
-**Step 1: Install causal-conv1d 1.1.1.**
+#### 2.3 Install causal-conv1d 1.1.1
 
 ```bash
 python -m pip install causal-conv1d==1.1.1 --no-build-isolation
@@ -92,7 +131,7 @@ python -m pip install causal-conv1d==1.1.1 --no-build-isolation
 
 </details>
 
-**Step 2: Install the bundled Mamba 1.2.0 source.**
+#### 2.4 Install the bundled Mamba 1.2.0 source
 
 The repository retains the original [Mamba 1.2.0 source](mamba-1.2.0) used in the installation tutorial.
 
@@ -109,7 +148,7 @@ cd ..
 
 </details>
 
-**Step 3: Check the environment.**
+#### 2.5 Check the environment
 
 ```bash
 python -c "import torch, mamba_ssm; from mamba_ssm.ops.selective_scan_interface import selective_scan_fn; print('PyTorch:', torch.__version__); print('Mamba:', mamba_ssm.__version__); print('CUDA available:', torch.cuda.is_available()); print('Visible GPUs:', torch.cuda.device_count())"
@@ -154,6 +193,8 @@ Dataset images, checkpoints, and generated outputs are excluded from Git trackin
 
 ### 4. Training and validation
 
+Run commands from the repository root after completing the environment and dataset setup above.
+
 Make exactly three GPUs visible. On a machine with more GPUs, select the devices before launching:
 
 ```bash
@@ -165,6 +206,8 @@ Run our training command:
 ```bash
 python -m torch.distributed.launch --nproc_per_node=3 --master_port=25000 CrackSeU_main_pal_4_Steelcrack.py --model=CrackSeU_B_LN_VT_CrackMamba --times=1 --batch_size=9 --learning_rates=6e-3
 ```
+
+#### Training configuration
 
 This command uses the original PyTorch distributed launcher and the following configuration:
 
@@ -184,6 +227,8 @@ This command uses the original PyTorch distributed launcher and the following co
 
 Validation begins when the epoch reaches 70% of the configured training duration. A checkpoint is written whenever the validation Dice improves. The supplied command explicitly selects the released architecture; use that model argument when launching training.
 
+#### Checkpoints and logs
+
 For this configuration, outputs are organized as follows:
 
 ```text
@@ -202,6 +247,8 @@ The epoch in the checkpoint filename is the saved epoch, not necessarily the fin
 
 Evaluate a checkpoint from the same run. Set `TEST_EPOCH` to an epoch for which a checkpoint exists; `67` below is an example.
 
+> **Model weights:** Checkpoints are generated by training; pretrained weights are not bundled with this source release.
+
 ```bash
 export CUDA_VISIBLE_DEVICES=0
 TEST_EPOCH=67
@@ -217,11 +264,18 @@ python CrackSeU_main_pal_test_4_Steelcrack.py \
 
 Use the same architecture, run identifier, and training batch size to locate the saved weights. In the evaluation script, `--batch_size=9` identifies the training checkpoint; the test loader itself uses batch size 1. `--epoch=70` identifies the experiment's configured training duration, while `--test_epoch` selects the saved checkpoint.
 
+<details>
+<summary>Checkpoint path for the example command</summary>
+
 For the example above, the script loads:
 
 ```text
 Checkpoints/SteelcrackCrackSeU_B_LN_VT_CrackMamba/1/CrackSeU_B_LN_VT_CrackMamba_9_Steelcrack_67.pth
 ```
+
+</details>
+
+#### Metrics and predictions
 
 Evaluation reports the mean **soft Dice** and **binary IoU** across test images. Dice uses predicted probabilities; IoU thresholds predictions and masks at 0.5. These definitions should be retained when comparing results.
 
@@ -232,28 +286,6 @@ Predictions/CrackSeU_B_LN_VT_CrackMamba/9/70/Steelcrack/
 ```
 
 Repeated evaluations with the same output settings overwrite prediction images with matching names. The profiler reports parameter counts for the inference variant, which omits the auxiliary head, using a 512 × 512 input for MAC profiling.
-
-## 🗂️ Repository structure
-
-```text
-CrackMamba/
-├── Nets/
-│   ├── CrackSeU_B_LN_VT_CrackMamba.py
-│   └── Module/
-│       ├── CrackMamba_G.py
-│       └── CrackMamba_L.py
-├── utils/
-│   ├── loss.py
-│   └── metrics.py
-├── Dataset.py
-├── CrackSeU_main_pal_4_Steelcrack.py
-├── CrackSeU_main_pal_test_4_Steelcrack.py
-├── mamba-1.2.0/
-├── figures/
-├── requirements.txt
-├── LICENSE
-└── README.md
-```
 
 ## 🛫 Build a deep learning environment on a Jetson device
 ### 1. Basic environment
