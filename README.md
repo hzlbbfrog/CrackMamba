@@ -55,7 +55,6 @@ The screenshot of the successful installation is shown below.
   <img src="./figures/Mamba 1.2.0.png" width="100%">
 </div>
 
-**Step 3:** Install Mamba 1.2.0
 
 ## 🛫 Build a deep learning environment on a Jetson device
 ### 1. Basic environment
