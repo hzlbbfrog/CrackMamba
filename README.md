@@ -55,16 +55,41 @@ The screenshot of the successful installation is shown below.
   <img src="./figures/Mamba 1.2.0.png" width="100%">
 </div>
 
+### 3. Prepare the dataset
+
+### 4. Training and validation
+
+### 5. Test
+
 
 ## 🛫 Build a deep learning environment on a Jetson device
 ### 1. Basic environment
 
 ### 2. Fast inference based on TensorRT (V10)
 In version 10+ of TensorRT, you should use **context.execute_async_v3()** for inference. **context.execute_async_v2()** has been deprecated.
-  
+
+
+
 ## 💗 Cite CrackMamba
+If you have any problems, please do not hesitate to contact us!
+You are very welcome to cite our paper!  
+The BibTeX entry of the paper is as follows:
+```BibTeX
+@article{CrackMamba,
+title = {CrackMamba: An attention-guided Mamba architecture for efficient and edge-ready crack segmentation using global and local information},
+journal = {Expert Systems with Applications},
+volume = {329},
+pages = {133035},
+year = {2026},
+issn = {0957-4174},
+doi = {https://doi.org/10.1016/j.eswa.2026.133035},
+url = {https://www.sciencedirect.com/science/article/pii/S0957417426019469},
+author = {Zhili He and Wai Yi Chau and Mei Ling Leung and Yingyue Han and Wessam Hamid and Yu-Hsing Wang and Jian Zhang},
+keywords = {Deep learning, Computer vision, Crack segmentation, Mamba, Attentionmechanism}
+}
+```
 
 ## 💘 Acknowledgements
-This repo benefits from Vim and VMamba.  
+This repo benefits from [Vim](https://github.com/hustvl/Vim) and [VMamba](https://github.com/mzeromiko/vmamba).  
 Thanks for their wonderful works!
 
