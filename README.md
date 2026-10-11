@@ -6,12 +6,12 @@
 
 Official PyTorch implementation of **CrackMamba: An attention-guided Mamba architecture for efficient and edge-ready crack segmentation using global and local information**.
 
-**Zhili He, Wai Yi Chau, Mei Ling Leung, Yingyue Han, Wessam Hamid, Yu-Hsing Wang, and Jian Zhang**<br>
+**[Zhili He](http://zl-he.com/), Wai Yi Chau, [Mei Ling Leung](https://www.linkedin.com/in/mei-ling-leung2389/), Yingyue Han, [Wessam Hamid](https://wessam.carrd.co/), [Yu-Hsing Wang](https://seng.hkust.edu.hk/about/people/faculty/yu-hsing-wang), and [Jian Zhang](https://civil.seu.edu.cn/zj/list.htm)**<br>
 *Expert Systems with Applications*, Volume 329, Article 133035, 2026.
 
 ### 🍓 Paper:
 
-[Journal paper](https://doi.org/10.1016/j.eswa.2026.133035) · [arXiv preprint](https://arxiv.org/abs/2407.15714) · [Steelcrack dataset](https://github.com/hzlbbfrog/Civil-dataset#-steelcrack)
+[Journal paper](https://www.sciencedirect.com/science/article/abs/pii/S0957417426019469?via%3Dihub) · [arXiv preprint](https://arxiv.org/abs/2407.15714) · [Steelcrack dataset](https://github.com/hzlbbfrog/Civil-dataset#-steelcrack)
 
 ### 🧭 Contents
 
@@ -68,7 +68,7 @@ CrackMamba/
 ## 📌 Updates
 
 - **`2026/10/11`**: We release all the code.
-- **`2026/05/26`**: Our paper is finally accepted by Expert Systems with Applications **(IF 9.4, CCF-C)** after **2 years** later!
+- **`2026/05/26`**: Our paper is finally accepted by [Expert Systems with Applications](https://www.sciencedirect.com/science/article/abs/pii/S0957417426019469?via%3Dihub) **(IF 9.4, CCF-C)** after **2 years** later!
 - **`2024/07/23`**: The preprint of our paper is publicly available on arXiv. Link → [Arxiv Paper](https://arxiv.org/abs/2407.15714).
 - **`2024/07/22`**: The preprint of our paper is submitted to arXiv.
 - **`2024/06/30`**: This repository is built up! The code will be gradually released.
