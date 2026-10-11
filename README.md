@@ -9,9 +9,11 @@ Official PyTorch implementation of **CrackMamba: An attention-guided Mamba archi
 **Zhili He, Wai Yi Chau, Mei Ling Leung, Yingyue Han, Wessam Hamid, Yu-Hsing Wang, and Jian Zhang**<br>
 *Expert Systems with Applications*, Volume 329, Article 133035, 2026.
 
-[Journal paper](https://doi.org/10.1016/j.eswa.2026.133035) · [arXiv preprint](https://arxiv.org/abs/2407.15714) · [Steelcrack dataset](https://github.com/hzlbbfrog/Civil-dataset#-steelcrack) · [Citation](#citation) · [License](LICENSE)
+### 🍓 Paper:
 
-## Overview
+[Journal paper](https://doi.org/10.1016/j.eswa.2026.133035) · [arXiv preprint](https://arxiv.org/abs/2407.15714) · [Steelcrack dataset](https://github.com/hzlbbfrog/Civil-dataset#-steelcrack) · [Citation](#-cite-crackmamba) · [License](LICENSE)
+
+## 📢 Introduction
 
 CrackMamba combines selective state-space modeling with attention-guided feature modulation for pixel-level crack segmentation. Global scan modules capture long-range crack structure, while local scan modules operate on regular and shifted patch grids. The segmentation network fuses features across resolutions and includes an auxiliary output for training.
 
@@ -28,16 +30,15 @@ This release provides the CrackMamba network, its global and local modules, and 
 
 Benchmark results, ablation studies, and edge deployment experiments are reported in the [journal paper](https://doi.org/10.1016/j.eswa.2026.133035).
 
-## Updates
+## 📌 Updates
 
-- **2026/10/12**: Added the CrackMamba source code and complete Steelcrack training and evaluation instructions.
-- **2026/10/11**: Announced the code release.
-- **2026/05/26**: The paper was accepted by *Expert Systems with Applications*.
-- **2024/07/23**: The preprint became publicly available on arXiv.
-- **2024/07/22**: Submitted the preprint to arXiv.
-- **2024/06/30**: Created the repository.
+- **`2026/10/11`**: We release all the code.
+- **`2026/05/26`**: Our paper is finally accepted by Expert Systems with Applications **(IF 9.4, CCF-C)** after **2 years** later!
+- **`2024/07/23`**: The preprint of our paper is publicly available on arXiv. Link → [Arxiv Paper](https://arxiv.org/abs/2407.15714).
+- **`2024/07/22`**: The preprint of our paper is submitted to arXiv.
+- **`2024/06/30`**: This repository is built up! The code will be gradually released.
 
-## Getting started
+## 🏎️ Getting Started
 
 ### 1. Requirements
 
@@ -232,7 +233,7 @@ Predictions/CrackSeU_B_LN_VT_CrackMamba/9/70/Steelcrack/
 
 Repeated evaluations with the same output settings overwrite prediction images with matching names. The profiler reports parameter counts for the inference variant, which omits the auxiliary head, using a 512 × 512 input for MAC profiling.
 
-## Repository structure
+## 🗂️ Repository structure
 
 ```text
 CrackMamba/
@@ -262,7 +263,7 @@ In version 10+ of TensorRT, you should use **context.execute_async_v3()** for in
 
 
 
-## Citation
+## 💗 Cite CrackMamba
 
 If you use CrackMamba in your research, please cite the journal paper:
 
@@ -293,11 +294,11 @@ For the original preprint:
 
 Please also follow the dataset citation instructions in [Civil-dataset](https://github.com/hzlbbfrog/Civil-dataset) when using Steelcrack.
 
-## Acknowledgements
+## 💘 Acknowledgements
 
 This project builds on the work and open-source implementations of [Mamba](https://github.com/state-spaces/mamba), [Vim](https://github.com/hustvl/Vim), and [VMamba](https://github.com/MzeroMiko/VMamba). We thank their authors for making these resources available. The original evaluation script also retains its reference to [UNET-ZOO](https://github.com/Andy-zhujunwen/UNET-ZOO).
 
-## License and contact
+## 📄 License and contact
 
 CrackMamba is released under the [Apache License 2.0](LICENSE). The bundled Mamba source retains its [upstream license](mamba-1.2.0/LICENSE).
 
