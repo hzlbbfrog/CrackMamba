@@ -1,0 +1,23 @@
+# Compatibility constraints for the reference Python 3.8 / PyTorch 1.12 setup.
+# Install CUDA-enabled PyTorch first using the command in README.md.
+# These constraints are not a lockfile of the original experiment environment.
+torch==1.12.1
+torchvision==0.13.1
+numpy>=1.21,<2
+einops>=0.6,<0.8
+timm==0.6.12
+Pillow>=9,<11
+opencv-python>=4.5,<4.12
+scikit-learn>=1.1,<1.4
+matplotlib>=3.5,<3.8
+ptflops==0.6.9
+
+# Dependencies imported by the bundled Mamba package and its build process.
+transformers==4.30.2
+triton==2.1.0; platform_system == "Linux" and platform_machine == "x86_64"
+packaging
+ninja
+wheel
+setuptools<70
+
+# Install causal-conv1d and the bundled Mamba source separately; see README.md.

@@ -1,0 +1,30 @@
+# Python caches and local environments.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# Dataset files and generated experiment outputs.
+/Dataset/Steelcrack/
+/Dataset/DeepCrack/
+/Checkpoints/
+/Result_log/
+/Predictions/
+*.pth
+*.pt
+*.ckpt
+
+# Build artifacts and local editor files.
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Internal review notes are maintained locally.
+/CODE_REVIEW.md
