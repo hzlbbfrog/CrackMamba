@@ -14,8 +14,4 @@ and returns only the main probability map; the auxiliary head is not evaluated.
 - SHA256: `24c12cc000cce3a62c8027bb91ede3b97ba1b1362f432fe5bfbbc0283e6b9220`
 
 The published file is byte-identical to the archived checkpoint; only its filename
-has been shortened. CPU reference and ONNX agreement are recorded in
-[`../validation/cpu_reference.json`](../validation/cpu_reference.json).
-The checkpoint is not interchangeable with the root Steelcrack G+L model.
-The recorded CPU checks do not establish Jetson TensorRT throughput or CUDA
-Mamba equivalence. See the deployment README for the target-device checks.
+has been shortened. Use the matching G-only model in this deployment package.

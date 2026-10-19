@@ -18,7 +18,7 @@ IMAGES=deploy/jetson/samples
 OUT=deploy/jetson/artifacts
 ```
 
-> The portable ONNX export has passed CPU numerical checks. TensorRT compatibility, numerical agreement, and speed still require validation on the target Orin.
+> TensorRT compatibility, numerical agreement, and speed require validation on the target Orin.
 
 ## ⚡ 2. Deployment
 
@@ -108,5 +108,3 @@ The ONNX model, TensorRT engine, and validation reports are written under `$OUT`
 | `report.json` | Inference timing and configuration |
 
 Timing includes data transfers and model execution; it excludes image loading, preprocessing, postprocessing, and file saving.
-
-See the [CPU validation notes](validation/README.md) for recorded conversion results. The field experiment and its performance results are described in [Section 5 of our paper](https://doi.org/10.1016/j.eswa.2026.133035).

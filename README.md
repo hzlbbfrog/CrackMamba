@@ -333,6 +333,14 @@ python -m pip install ./mamba_ssm-2.2.4-cp310-cp310-linux_aarch64.whl
 
 ### ⚡ 3. TensorRT deployment
 
+In our field experiment, **CrackSeU + CrackMamba_G pretrained on Deepcrack** was deployed on a Jetson AGX Orin without fine-tuning on the pavement images. [Section 5 of our paper](https://doi.org/10.1016/j.eswa.2026.133035) reports the following performance:
+
+| Inference mode | Power setting | Mean FPS |
+| --- | --- | ---: |
+| Native PyTorch | 30 W | 4.5 |
+| Native PyTorch | 50 W | 8.3 |
+| ONNX + TensorRT | 30 W | **17.4** |
+
 Follow the [Jetson deployment tutorial](deploy/jetson/README.md) for ONNX export, numerical validation, TensorRT engine building, and inference.
 
 ## 💗 Cite CrackMamba
