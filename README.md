@@ -302,15 +302,34 @@ Our Jetson inference environment is:
 | CUDA / cuDNN / TensorRT | 12.6.68 / 9.3.0 / 10.3.0 |
 | Python / PyTorch / Mamba | 3.10.16 / 2.6.0 / 2.2.4 |
 
-We assume the Jetson AI environment is already configured, including CUDA-enabled PyTorch, the CUDA toolkit (`nvcc`), TensorRT, and Triton.
+We assume the Jetson AI environment, including CUDA-enabled PyTorch and TensorRT, is already configured.
 
 ### 🐍 Install Mamba
 
-Build [Mamba 2.2.4](https://github.com/state-spaces/mamba/tree/v2.2.4) on the Jetson using the existing PyTorch environment:
+Our Jetson installation used the prebuilt **Mamba 2.2.4 ARM64 wheel for Python 3.10** from Jetson AI Lab. Activate your existing PyTorch environment and install the downloaded wheel:
 
 ```bash
-MAMBA_FORCE_BUILD=TRUE python -m pip install "mamba-ssm==2.2.4" --no-build-isolation
+python -m pip install ./mamba_ssm-2.2.4-cp310-cp310-linux_aarch64.whl
 ```
+
+The [current Jetson AI Lab index](https://pypi.jetson-ai-lab.io/jp6/cu126) no longer lists this 2.2.4 wheel; the command above requires a local copy of the original file.
+
+<details>
+<summary>Original Mamba installation screenshots</summary>
+
+**Select the Python 3.10 ARM64 wheel from the original Jetson AI Lab index.**
+
+<img src="./figures/jetson_mamba_wheel_index.png" width="100%" alt="Original Jetson AI Lab listing of the Mamba 2.2.4 Python 3.10 ARM64 wheel">
+
+**Install the downloaded wheel in the active PyTorch environment.**
+
+<img src="./figures/jetson_mamba_install.png" width="100%" alt="Installing the Mamba 2.2.4 ARM64 wheel in the existing PyTorch environment">
+
+**Confirm the successful installation.**
+
+<img src="./figures/jetson_mamba_installed.png" width="100%" alt="Terminal reporting Successfully installed mamba-ssm-2.2.4">
+
+</details>
 
 Inference and conversion scripts are available in the [Jetson deployment guide](deploy/jetson/README.md).
 
