@@ -12,43 +12,22 @@ The checkpoint loads all 237 state-dictionary entries strictly. Local CPU valida
 
 ## 🔧 1. Environment
 
-Keep the Jetson inference environment separate from the older desktop training environment. The paper reports:
+The Jetson inference environment used in the paper is:
 
-| Component | Paper configuration |
+| Component | Version / configuration |
 | --- | --- |
-| Device | NVIDIA Jetson AGX Orin, 32 GB LPDDR5 |
-| JetPack / Jetson Linux | 6.2 / 36.4.3 |
-| Ubuntu | 22.04 |
-| CUDA | 12.6.68, as reported in the paper |
-| cuDNN / TensorRT | 9.3.0 / 10.3.0 |
-| Python / PyTorch | 3.10.16 / 2.6.0 |
-| Mamba | 2.2.4 |
+| Device | Jetson AGX Orin, 32 GB LPDDR5 |
+| JetPack / Jetson Linux / Ubuntu | 6.2 / 36.4.3 / 22.04 |
+| CUDA / cuDNN / TensorRT | 12.6.68 / 9.3.0 / 10.3.0 |
+| Python / PyTorch / Mamba | 3.10.16 / 2.6.0 / 2.2.4 |
 
-Follow [JetPack 6.2](https://docs.nvidia.com/jetson/jetpack/6.2/release-notes/index.html) for the system compute stack and [NVIDIA's PyTorch for Jetson guide](https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html) for a CUDA-enabled ARM64 PyTorch build matched to your JetPack and Python versions. NVIDIA lists CUDA 12.6.10 in the JetPack release notes; retain the paper's version label above and record the actual installed versions when reproducing the experiment.
+We assume the Jetson AI environment is already configured, including CUDA-enabled PyTorch, the CUDA toolkit (`nvcc`), TensorRT, and Triton. The package dependencies are listed in [requirements.txt](requirements.txt).
 
-From the **repository root**, install the deployment dependencies after installing PyTorch:
+Build [Mamba 2.2.4](https://github.com/state-spaces/mamba/tree/v2.2.4) on the Jetson using the existing PyTorch environment:
 
 ```bash
-python -m pip install -r deploy/jetson/requirements.txt
-mkdir -p deploy/jetson/artifacts
-python deploy/jetson/check_environment.py \
-  --output deploy/jetson/artifacts/environment.json
+MAMBA_FORCE_BUILD=TRUE python -m pip install "mamba-ssm==2.2.4" --no-build-isolation
 ```
-
-On Orin, add `--require-cuda --require-tensorrt` to the environment check to fail if CUDA-enabled PyTorch or TensorRT 10 is unavailable. Without these flags, the command records available and missing components for diagnostics.
-
-The system TensorRT Python bindings must be visible in the active Python environment. If using a virtual environment, create it with access to the JetPack system packages or install bindings that match the system TensorRT libraries. Install the matching `mamba-ssm` CUDA extension only when using the optimized PyTorch backend; the reference backend and ONNX validation do not require Mamba.
-
-The TensorRT runner also requires [PyCUDA](https://documen.tician.de/pycuda/install.html), built against the target device's CUDA toolkit. With the toolkit and build tools available on Orin, install it into the same Python environment:
-
-```bash
-python -m pip install pycuda
-python -c "import tensorrt, pycuda.driver; print('TensorRT:', tensorrt.__version__)"
-```
-
-For the optimized PyTorch path, use the selective-scan extension from [Mamba 2.2.4](https://github.com/state-spaces/mamba/tree/v2.2.4), matching the paper. Its build must match your ARM64 PyTorch and CUDA environment. The requirements file intentionally leaves the system compute stack and these device-specific extensions to the target environment.
-
-On Orin, also record the device power configuration with `sudo nvpmodel -q`. Power-mode IDs depend on the module and configuration; use the modes supported by your device.
 
 ## 🧩 2. Files and model
 

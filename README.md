@@ -291,66 +291,28 @@ Repeated evaluations with the same output settings overwrite prediction images w
 
 ## 🛫 Set up an inference environment on a Jetson device
 
-The field deployment uses **CrackSeU + CrackMamba_G pretrained on Deepcrack** with no fine-tuning on the campus pavement images. This G-only variant is separate from the Steelcrack G+L model above. The [Jetson deployment package](deploy/jetson/README.md) includes its matching checkpoint, three prepared sample patches, PyTorch inference, ONNX export and validation, and a TensorRT 10 runtime.
+### 🔧 Environment
 
-### 🔧 1. Environment and input
+Our Jetson inference environment is:
 
-| Component | Paper-reported configuration |
+| Component | Version / configuration |
 | --- | --- |
 | Device | Jetson AGX Orin, 32 GB LPDDR5 |
 | JetPack / Jetson Linux / Ubuntu | 6.2 / 36.4.3 / 22.04 |
 | CUDA / cuDNN / TensorRT | 12.6.68 / 9.3.0 / 10.3.0 |
 | Python / PyTorch / Mamba | 3.10.16 / 2.6.0 / 2.2.4 |
 
-Use [JetPack 6.2](https://docs.nvidia.com/jetson/jetpack/6.2/release-notes/index.html) and a [JetPack-compatible ARM64 PyTorch build](https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html). The table records the paper's environment; capture the actual installed versions when reproducing it. This environment is separate from the desktop training environment. Device-specific installation details are in the [deployment guide](deploy/jetson/README.md#-1-environment).
+We assume the Jetson AI environment is already configured, including CUDA-enabled PyTorch, the CUDA toolkit (`nvcc`), TensorRT, and Triton.
 
-The example accepts **480 × 480 RGB patches**, normalizes each channel with mean/std `0.5`, and uses batch size 1. The model returns a foreground probability map. The camera acquisition and full-image cropping system are outside this prepared-patch example.
+### 🐍 Install Mamba
 
-### 🐍 2. Run the PyTorch reference
-
-Run from the repository root after installing PyTorch:
+Build [Mamba 2.2.4](https://github.com/state-spaces/mamba/tree/v2.2.4) on the Jetson using the existing PyTorch environment:
 
 ```bash
-python -m pip install -r deploy/jetson/requirements.txt
-CHECKPOINT=deploy/jetson/checkpoints/crackmamba_global_deepcrack_epoch15.pth
-
-python deploy/jetson/infer_pytorch.py \
-  --checkpoint "$CHECKPOINT" \
-  --images deploy/jetson/samples \
-  --output-dir deploy/jetson/artifacts/pytorch \
-  --device cpu --scan-backend reference --warmup 1 --threshold 0.5
+MAMBA_FORCE_BUILD=TRUE python -m pip install "mamba-ssm==2.2.4" --no-build-isolation
 ```
 
-This saves float32 probability arrays, PNG previews, binary masks, and a timing report. The reference backend also runs on CPU without the Mamba extension. On Orin with the matching extension installed, select `--device cuda --scan-backend mamba` for optimized native PyTorch inference.
-
-### ⚡ 3. Export, validate, and deploy with TensorRT 10
-
-```text
-Deepcrack checkpoint + G-only model
-    → PyTorch reference → ONNX → numerical validation
-    → TensorRT engine built on Orin → engine validation → TensorRT inference
-```
-
-The [step-by-step deployment guide](deploy/jetson/README.md#-3-workflow) provides the export, validation, engine-build, and inference commands. Export preserves all eight global scans as standard ONNX `Loop` recurrences. Engine construction checks the graph/checkpoint hashes against a successful real-image validation report. TensorRT inference uses named I/O tensors, pinned buffers, one CUDA stream, and `context.execute_async_v3()`.
-
-| Verification | Status |
-| --- | --- |
-| Checkpoint loading | All 237 state-dictionary entries load strictly |
-| CPU PyTorch / ONNX comparison | Passed on the three included real patches; maximum probability error `1.54e-5`, zero binary-mask disagreement |
-| Automated regression checks | 18 passing tests |
-| CUDA Mamba comparison and TensorRT engine build / execution | Require validation on the target Orin |
-
-See the [recorded CPU validation](deploy/jetson/validation/cpu_reference.json). The portable ONNX recurrence prioritizes correctness and does not reproduce the paper's optimized CUDA scan kernel or establish its TensorRT speed. Verify TensorRT parsing, numerical agreement, and throughput on the target device before field use.
-
-### 📊 4. Paper-reported performance
-
-| Inference mode | Power setting | Mean FPS in the paper |
-| --- | --- | ---: |
-| Native PyTorch | 30 W | 4.5 |
-| Native PyTorch | 50 W | 8.3 |
-| ONNX + TensorRT | 30 W | 17.4 |
-
-These are results reported in [Section 5 of the paper](https://doi.org/10.1016/j.eswa.2026.133035), not new measurements of this deployment package. Record the power mode, precision, warm-up, sample count, and timing scope for any new benchmark.
+Inference and conversion scripts are available in the [Jetson deployment guide](deploy/jetson/README.md).
 
 ## 💗 Cite CrackMamba
 
