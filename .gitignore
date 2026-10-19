@@ -15,6 +15,12 @@ venv/
 *.pth
 *.pt
 *.ckpt
+*.onnx
+*.trt
+*.plan
+*.engine
+/deploy/jetson/artifacts/
+!/deploy/jetson/checkpoints/crackmamba_global_deepcrack_epoch15.pth
 
 # Build artifacts and local editor files.
 build/
@@ -28,3 +34,5 @@ Thumbs.db
 
 # Internal review notes are maintained locally.
 /CODE_REVIEW.md
+/JETSON_*.md
+/.test-tmp/

@@ -1,0 +1,10 @@
+# Install the JetPack-compatible PyTorch and TensorRT packages separately.
+# Do not install the root training requirements into the Jetson environment.
+numpy>=1.24,<2
+Pillow>=9.5,<12
+onnx>=1.16,<1.19
+onnxruntime>=1.18,<1.21
+packaging>=23
+
+# Mamba is needed only by the optimized CUDA backend, not the CPU reference.
+# PyCUDA is needed only by the TensorRT runner and should be built for JetPack.

@@ -1,0 +1,2 @@
+# Shell entry points must keep LF endings on Linux and Windows checkouts.
+*.sh text eol=lf

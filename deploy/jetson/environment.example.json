@@ -1,0 +1,26 @@
+{
+  "description": "Recording template only. Null fields must be replaced with observations from the actual deployment device.",
+  "paper_reported": {
+    "device": "NVIDIA Jetson AGX Orin, 32 GB LPDDR5",
+    "jetpack": "6.2",
+    "jetson_linux": "36.4.3",
+    "ubuntu": "22.04",
+    "cuda": "12.6.68",
+    "cudnn": "9.3.0",
+    "tensorrt": "10.3.0",
+    "python": "3.10.16",
+    "pytorch": "2.6.0",
+    "mamba": "2.2.4",
+    "input_shape": [1, 3, 480, 480]
+  },
+  "observed_environment_report": null,
+  "jetson_power_mode": null,
+  "jetson_clocks": null,
+  "checkpoint_sha256": null,
+  "onnx_sha256": null,
+  "engine_sha256": null,
+  "validation_report": null,
+  "engine_validation_report": null,
+  "build_log": null,
+  "notes": "The revised export and runtime must be validated on the target device; paper FPS values are not measurements of this release."
+}

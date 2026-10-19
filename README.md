@@ -17,7 +17,7 @@ Official PyTorch implementation of **CrackMamba: An attention-guided Mamba archi
 
 - **Project:** [Introduction](#-introduction) · [Repository structure](#repository-structure) · [Updates](#-updates)
 - **Reproduction:** [Requirements](#1-requirements) · [Installation](#2-installation-of-mamba) · [Dataset](#3-prepare-the-dataset) · [Training](#4-training-and-validation) · [Evaluation](#5-test)
-- **Resources:** [Jetson tutorial](#-build-a-deep-learning-environment-on-a-jetson-device) · [Citation](#-cite-crackmamba) · [License and contact](#-license-and-contact)
+- **Resources:** [Jetson inference](#-set-up-an-inference-environment-on-a-jetson-device) · [Citation](#-cite-crackmamba) · [License and contact](#-license-and-contact)
 
 ## 📢 Introduction
 
@@ -39,6 +39,7 @@ Benchmark results, ablation studies, and edge deployment experiments are reporte
 | Dataset loaders | [Dataset.py](Dataset.py) |
 | Distributed training and validation | [Training script](CrackSeU_main_pal_4_Steelcrack.py) |
 | Checkpoint evaluation and prediction export | [Evaluation script](CrackSeU_main_pal_test_4_Steelcrack.py) |
+| Deepcrack G-only inference and Jetson deployment | [Jetson deployment guide](deploy/jetson/README.md) |
 
 <details>
 <summary>View the full repository layout</summary>
@@ -54,6 +55,7 @@ CrackMamba/
 │   ├── loss.py
 │   └── metrics.py
 ├── Dataset.py
+├── deploy/jetson/
 ├── CrackSeU_main_pal_4_Steelcrack.py
 ├── CrackSeU_main_pal_test_4_Steelcrack.py
 ├── mamba-1.2.0/
@@ -287,13 +289,68 @@ Predictions/CrackSeU_B_LN_VT_CrackMamba/9/70/Steelcrack/
 
 Repeated evaluations with the same output settings overwrite prediction images with matching names. The profiler reports parameter counts for the inference variant, which omits the auxiliary head, using a 512 × 512 input for MAC profiling.
 
-## 🛫 Build a deep learning environment on a Jetson device
-### 1. Basic environment
+## 🛫 Set up an inference environment on a Jetson device
 
-### 2. Fast inference based on TensorRT (V10)
-In version 10+ of TensorRT, you should use **context.execute_async_v3()** for inference. **context.execute_async_v2()** has been deprecated.
+The field deployment uses **CrackSeU + CrackMamba_G pretrained on Deepcrack** with no fine-tuning on the campus pavement images. This G-only variant is separate from the Steelcrack G+L model above. The [Jetson deployment package](deploy/jetson/README.md) includes its matching checkpoint, three prepared sample patches, PyTorch inference, ONNX export and validation, and a TensorRT 10 runtime.
 
+### 🔧 1. Environment and input
 
+| Component | Paper-reported configuration |
+| --- | --- |
+| Device | Jetson AGX Orin, 32 GB LPDDR5 |
+| JetPack / Jetson Linux / Ubuntu | 6.2 / 36.4.3 / 22.04 |
+| CUDA / cuDNN / TensorRT | 12.6.68 / 9.3.0 / 10.3.0 |
+| Python / PyTorch / Mamba | 3.10.16 / 2.6.0 / 2.2.4 |
+
+Use [JetPack 6.2](https://docs.nvidia.com/jetson/jetpack/6.2/release-notes/index.html) and a [JetPack-compatible ARM64 PyTorch build](https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html). The table records the paper's environment; capture the actual installed versions when reproducing it. This environment is separate from the desktop training environment. Device-specific installation details are in the [deployment guide](deploy/jetson/README.md#-1-environment).
+
+The example accepts **480 × 480 RGB patches**, normalizes each channel with mean/std `0.5`, and uses batch size 1. The model returns a foreground probability map. The camera acquisition and full-image cropping system are outside this prepared-patch example.
+
+### 🐍 2. Run the PyTorch reference
+
+Run from the repository root after installing PyTorch:
+
+```bash
+python -m pip install -r deploy/jetson/requirements.txt
+CHECKPOINT=deploy/jetson/checkpoints/crackmamba_global_deepcrack_epoch15.pth
+
+python deploy/jetson/infer_pytorch.py \
+  --checkpoint "$CHECKPOINT" \
+  --images deploy/jetson/samples \
+  --output-dir deploy/jetson/artifacts/pytorch \
+  --device cpu --scan-backend reference --warmup 1 --threshold 0.5
+```
+
+This saves float32 probability arrays, PNG previews, binary masks, and a timing report. The reference backend also runs on CPU without the Mamba extension. On Orin with the matching extension installed, select `--device cuda --scan-backend mamba` for optimized native PyTorch inference.
+
+### ⚡ 3. Export, validate, and deploy with TensorRT 10
+
+```text
+Deepcrack checkpoint + G-only model
+    → PyTorch reference → ONNX → numerical validation
+    → TensorRT engine built on Orin → engine validation → TensorRT inference
+```
+
+The [step-by-step deployment guide](deploy/jetson/README.md#-3-workflow) provides the export, validation, engine-build, and inference commands. Export preserves all eight global scans as standard ONNX `Loop` recurrences. Engine construction checks the graph/checkpoint hashes against a successful real-image validation report. TensorRT inference uses named I/O tensors, pinned buffers, one CUDA stream, and `context.execute_async_v3()`.
+
+| Verification | Status |
+| --- | --- |
+| Checkpoint loading | All 237 state-dictionary entries load strictly |
+| CPU PyTorch / ONNX comparison | Passed on the three included real patches; maximum probability error `1.54e-5`, zero binary-mask disagreement |
+| Automated regression checks | 18 passing tests |
+| CUDA Mamba comparison and TensorRT engine build / execution | Require validation on the target Orin |
+
+See the [recorded CPU validation](deploy/jetson/validation/cpu_reference.json). The portable ONNX recurrence prioritizes correctness and does not reproduce the paper's optimized CUDA scan kernel or establish its TensorRT speed. Verify TensorRT parsing, numerical agreement, and throughput on the target device before field use.
+
+### 📊 4. Paper-reported performance
+
+| Inference mode | Power setting | Mean FPS in the paper |
+| --- | --- | ---: |
+| Native PyTorch | 30 W | 4.5 |
+| Native PyTorch | 50 W | 8.3 |
+| ONNX + TensorRT | 30 W | 17.4 |
+
+These are results reported in [Section 5 of the paper](https://doi.org/10.1016/j.eswa.2026.133035), not new measurements of this deployment package. Record the power mode, precision, warm-up, sample count, and timing scope for any new benchmark.
 
 ## 💗 Cite CrackMamba
 
