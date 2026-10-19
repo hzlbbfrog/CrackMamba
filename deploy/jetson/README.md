@@ -23,13 +23,13 @@ The Jetson inference environment used in the paper is:
 
 We assume the Jetson AI environment, including CUDA-enabled PyTorch and TensorRT, is already configured. The package dependencies are listed in [requirements.txt](requirements.txt).
 
-Our Jetson installation used the prebuilt **Mamba 2.2.4 ARM64 wheel for Python 3.10** from Jetson AI Lab. Activate your existing PyTorch environment and install the downloaded wheel:
+Our Jetson installation used the prebuilt **Mamba 2.2.4 ARM64 wheel for Python 3.10** from Jetson AI Lab. The [current Jetson AI Lab index](https://pypi.jetson-ai-lab.io/jp6/cu126) no longer lists this 2.2.4 wheel, so we provide the original file in our [GitHub Release](https://github.com/hzlbbfrog/CrackMamba/releases/tag/jetson-mamba-2.2.4).
+
+[Download the Mamba 2.2.4 wheel](https://github.com/hzlbbfrog/CrackMamba/releases/download/jetson-mamba-2.2.4/mamba_ssm-2.2.4-cp310-cp310-linux_aarch64.whl), then run the following command in the download directory with your PyTorch environment activated:
 
 ```bash
 python -m pip install ./mamba_ssm-2.2.4-cp310-cp310-linux_aarch64.whl
 ```
-
-The [current Jetson AI Lab index](https://pypi.jetson-ai-lab.io/jp6/cu126) no longer lists this 2.2.4 wheel; the command above requires a local copy of the original file.
 
 See the [original installation screenshots](../../README.md#-install-mamba).
 
