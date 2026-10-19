@@ -17,7 +17,7 @@ Official PyTorch implementation of **CrackMamba: An attention-guided Mamba archi
 
 - **Project:** [Introduction](#-introduction) · [Repository structure](#repository-structure) · [Updates](#-updates)
 - **Reproduction:** [Requirements](#1-requirements) · [Installation](#2-installation-of-mamba) · [Dataset](#3-prepare-the-dataset) · [Training](#4-training-and-validation) · [Evaluation](#5-test)
-- **Resources:** [Jetson inference](#-set-up-an-inference-environment-on-a-jetson-device) · [Citation](#-cite-crackmamba) · [License and contact](#-license-and-contact)
+- **Resources:** [Jetson deployment](#-deploy-crackmamba-on-jetson-with-tensorrt) · [Citation](#-cite-crackmamba) · [License and contact](#-license-and-contact)
 
 ## 📢 Introduction
 
@@ -289,9 +289,9 @@ Predictions/CrackSeU_B_LN_VT_CrackMamba/9/70/Steelcrack/
 
 Repeated evaluations with the same output settings overwrite prediction images with matching names. The profiler reports parameter counts for the inference variant, which omits the auxiliary head, using a 512 × 512 input for MAC profiling.
 
-## 🛫 Set up an inference environment on a Jetson device
+## 🛫 Deploy CrackMamba on Jetson with TensorRT
 
-### 🔧 Environment
+### 🔧 1. Environment
 
 Our Jetson inference environment is:
 
@@ -304,7 +304,7 @@ Our Jetson inference environment is:
 
 We assume the Jetson AI environment, including CUDA-enabled PyTorch and TensorRT, is already configured.
 
-### 🐍 Install Mamba
+### 🐍 2. Install Mamba
 
 Our Jetson installation used the prebuilt **Mamba 2.2.4 ARM64 wheel for Python 3.10** from Jetson AI Lab. The [current Jetson AI Lab index](https://pypi.jetson-ai-lab.io/jp6/cu126) no longer lists this 2.2.4 wheel, so we provide the original file in our [GitHub Release](https://github.com/hzlbbfrog/CrackMamba/releases/tag/jetson-mamba-2.2.4).
 
@@ -331,7 +331,9 @@ python -m pip install ./mamba_ssm-2.2.4-cp310-cp310-linux_aarch64.whl
 
 </details>
 
-Inference and conversion scripts are available in the [Jetson deployment guide](deploy/jetson/README.md).
+### ⚡ 3. TensorRT deployment
+
+Follow the [Jetson deployment tutorial](deploy/jetson/README.md) for ONNX export, numerical validation, TensorRT engine building, and inference.
 
 ## 💗 Cite CrackMamba
 

@@ -31,7 +31,7 @@ Our Jetson installation used the prebuilt **Mamba 2.2.4 ARM64 wheel for Python 3
 python -m pip install ./mamba_ssm-2.2.4-cp310-cp310-linux_aarch64.whl
 ```
 
-See the [original installation screenshots](../../README.md#-install-mamba).
+See the [original installation screenshots](../../README.md#-2-install-mamba).
 
 ## 🧩 2. Files and model
 
